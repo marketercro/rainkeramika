@@ -1,0 +1,1001 @@
+<!DOCTYPE html>
+<html lang="hr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RAIN KERAMIKA - Opusti se uz keramiku</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600&family=Outfit:wght@300;400;500&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --clay: #c5a687;
+            --terracotta: #d4a574;
+            --earth: #8b7355;
+            --cream: #faf8f5;
+            --soft-black: #2c2520;
+            --sage: #9ca896;
+            --muted-green: #b5c4a8;
+        }
+
+        body {
+            font-family: 'Outfit', sans-serif;
+            background: var(--cream);
+            color: var(--soft-black);
+            line-height: 1.7;
+            overflow-x: hidden;
+        }
+
+        .grain-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0.03;
+            pointer-events: none;
+            z-index: 9999;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            padding: 1.5rem 5%;
+            background: rgba(250, 248, 245, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            border-bottom: 1px solid rgba(197, 166, 135, 0.2);
+        }
+
+        nav .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.8rem;
+            font-weight: 600;
+            color: var(--earth);
+            letter-spacing: 2px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2.5rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--soft-black);
+            font-size: 0.95rem;
+            font-weight: 400;
+            transition: color 0.3s;
+            letter-spacing: 0.5px;
+        }
+
+        .nav-links a:hover {
+            color: var(--clay);
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            padding: 8rem 5% 4rem;
+            background: linear-gradient(135deg, #faf8f5 0%, #f5f1eb 100%);
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -20%;
+            width: 80%;
+            height: 150%;
+            background: radial-gradient(circle, rgba(197, 166, 135, 0.08) 0%, transparent 70%);
+            animation: float 20s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translate(0, 0) rotate(0deg); }
+            50% { transform: translate(-30px, 30px) rotate(5deg); }
+        }
+
+        .hero-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero-text h1 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 4.5rem;
+            font-weight: 300;
+            line-height: 1.2;
+            margin-bottom: 1.5rem;
+            color: var(--earth);
+            animation: fadeInUp 1s ease-out;
+        }
+
+        .hero-text h1 strong {
+            font-weight: 600;
+            color: var(--clay);
+        }
+
+        .hero-text p {
+            font-size: 1.2rem;
+            color: var(--soft-black);
+            margin-bottom: 2rem;
+            opacity: 0.9;
+            animation: fadeInUp 1s ease-out 0.2s both;
+        }
+
+        .cta-button {
+            display: inline-block;
+            padding: 1rem 2.5rem;
+            background: var(--clay);
+            color: white;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: 500;
+            letter-spacing: 1px;
+            transition: all 0.3s;
+            animation: fadeInUp 1s ease-out 0.4s both;
+            box-shadow: 0 10px 30px rgba(197, 166, 135, 0.3);
+        }
+
+        .cta-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 15px 40px rgba(197, 166, 135, 0.4);
+            background: var(--terracotta);
+        }
+
+        .hero-image {
+            position: relative;
+            animation: fadeInRight 1s ease-out 0.3s both;
+        }
+
+        .hero-image img {
+            width: 100%;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInRight {
+            from {
+                opacity: 0;
+                transform: translateX(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        /* About Section */
+        .about {
+            padding: 6rem 5%;
+            background: white;
+            position: relative;
+        }
+
+        .about::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--clay), transparent);
+        }
+
+        .about-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1.2fr;
+            gap: 5rem;
+            align-items: center;
+        }
+
+        .about-image {
+            position: relative;
+        }
+
+        .about-image img {
+            width: 100%;
+            border-radius: 15px;
+            box-shadow: 0 15px 50px rgba(0, 0, 0, 0.1);
+        }
+
+        .about-text h2 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 3rem;
+            font-weight: 400;
+            color: var(--earth);
+            margin-bottom: 2rem;
+        }
+
+        .about-text p {
+            font-size: 1.05rem;
+            line-height: 1.9;
+            color: var(--soft-black);
+            opacity: 0.85;
+            margin-bottom: 1.5rem;
+        }
+
+        /* What's Included Section */
+        .whats-included {
+            padding: 6rem 5%;
+            background: linear-gradient(to bottom, #f5f1eb, #faf8f5);
+        }
+
+        .whats-included h2 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 3rem;
+            text-align: center;
+            color: var(--earth);
+            margin-bottom: 3rem;
+        }
+
+        .included-grid {
+            max-width: 1000px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+
+        .included-item {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s;
+        }
+
+        .included-item:hover {
+            transform: translateY(-5px);
+        }
+
+        .included-item .icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .included-item h3 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.5rem;
+            color: var(--clay);
+            margin-bottom: 0.5rem;
+        }
+
+        .included-item p {
+            font-size: 0.95rem;
+            color: var(--soft-black);
+            opacity: 0.8;
+        }
+
+        /* Gallery Section */
+        .gallery {
+            padding: 6rem 5%;
+            background: white;
+        }
+
+        .gallery h2 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 3rem;
+            text-align: center;
+            color: var(--earth);
+            margin-bottom: 3rem;
+        }
+
+        .gallery-grid {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .gallery-item {
+            position: relative;
+            overflow: hidden;
+            border-radius: 15px;
+            aspect-ratio: 1;
+        }
+
+        .gallery-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s;
+        }
+
+        .gallery-item:hover img {
+            transform: scale(1.1);
+        }
+
+        /* Workshops Section */
+        .workshops {
+            padding: 6rem 5%;
+            background: linear-gradient(135deg, #f5f1eb 0%, #faf8f5 100%);
+        }
+
+        .workshops h2 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 3rem;
+            text-align: center;
+            color: var(--earth);
+            margin-bottom: 1rem;
+        }
+
+        .workshops-subtitle {
+            text-align: center;
+            font-size: 1.1rem;
+            color: var(--soft-black);
+            opacity: 0.8;
+            margin-bottom: 4rem;
+        }
+
+        .workshop-cards {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2.5rem;
+        }
+
+        .workshop-card {
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.08);
+            transition: transform 0.3s;
+        }
+
+        .workshop-card:hover {
+            transform: translateY(-10px);
+        }
+
+        .workshop-card img {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+        }
+
+        .workshop-info {
+            padding: 2rem;
+        }
+
+        .workshop-date {
+            font-size: 0.9rem;
+            color: var(--clay);
+            font-weight: 500;
+            margin-bottom: 0.5rem;
+            letter-spacing: 1px;
+        }
+
+        .workshop-info h3 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 2rem;
+            color: var(--earth);
+            margin-bottom: 1rem;
+        }
+
+        .workshop-info p {
+            color: var(--soft-black);
+            opacity: 0.8;
+            margin-bottom: 1.5rem;
+        }
+
+        .workshop-details {
+            display: flex;
+            gap: 1.5rem;
+            margin-bottom: 1.5rem;
+            font-size: 0.9rem;
+        }
+
+        .workshop-detail {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--soft-black);
+        }
+
+        .workshop-price {
+            font-size: 1.5rem;
+            font-weight: 500;
+            color: var(--clay);
+            margin-bottom: 1rem;
+        }
+
+        .workshop-button {
+            display: inline-block;
+            width: 100%;
+            padding: 0.9rem;
+            background: var(--clay);
+            color: white;
+            text-align: center;
+            text-decoration: none;
+            border-radius: 10px;
+            font-weight: 500;
+            transition: all 0.3s;
+        }
+
+        .workshop-button:hover {
+            background: var(--terracotta);
+            transform: translateY(-2px);
+        }
+
+        /* Testimonials */
+        .testimonials {
+            padding: 6rem 5%;
+            background: white;
+        }
+
+        .testimonials h2 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 3rem;
+            text-align: center;
+            color: var(--earth);
+            margin-bottom: 4rem;
+        }
+
+        .testimonial-grid {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2.5rem;
+        }
+
+        .testimonial {
+            background: #f5f1eb;
+            padding: 2.5rem;
+            border-radius: 15px;
+            position: relative;
+        }
+
+        .testimonial::before {
+            content: '"';
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 5rem;
+            color: var(--clay);
+            opacity: 0.2;
+            position: absolute;
+            top: 1rem;
+            left: 1.5rem;
+        }
+
+        .testimonial-text {
+            font-size: 1rem;
+            line-height: 1.8;
+            color: var(--soft-black);
+            margin-bottom: 1.5rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .testimonial-author {
+            font-weight: 500;
+            color: var(--clay);
+            font-size: 1.1rem;
+        }
+
+        /* Contact Section */
+        .contact {
+            padding: 6rem 5%;
+            background: linear-gradient(135deg, var(--earth) 0%, var(--clay) 100%);
+            color: white;
+        }
+
+        .contact-content {
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .contact h2 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .contact p {
+            font-size: 1.2rem;
+            margin-bottom: 3rem;
+            opacity: 0.95;
+        }
+
+        .contact-form {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            padding: 3rem;
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+            text-align: left;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            letter-spacing: 0.5px;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 1rem;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 10px;
+            font-family: 'Outfit', sans-serif;
+            font-size: 1rem;
+            color: var(--soft-black);
+            transition: all 0.3s;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: white;
+            background: white;
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 120px;
+        }
+
+        .submit-button {
+            width: 100%;
+            padding: 1.2rem;
+            background: white;
+            color: var(--earth);
+            border: none;
+            border-radius: 10px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            letter-spacing: 1px;
+        }
+
+        .submit-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .form-success {
+            display: none;
+            background: rgba(181, 196, 168, 0.3);
+            color: white;
+            padding: 1.5rem;
+            border-radius: 10px;
+            margin-top: 1rem;
+            text-align: center;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--soft-black);
+            color: white;
+            padding: 3rem 5%;
+            text-align: center;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .footer-logo {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            letter-spacing: 2px;
+        }
+
+        .footer-info {
+            opacity: 0.8;
+            margin-bottom: 1rem;
+        }
+
+        .footer-info a {
+            color: white;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .footer-info a:hover {
+            color: var(--clay);
+        }
+
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            .hero-content {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+
+            .hero-text h1 {
+                font-size: 3rem;
+            }
+
+            .about-content {
+                grid-template-columns: 1fr;
+                gap: 3rem;
+            }
+
+            .testimonial-grid,
+            .gallery-grid,
+            .workshop-cards {
+                grid-template-columns: 1fr;
+            }
+
+            .contact-form {
+                padding: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="grain-overlay"></div>
+
+    <!-- Navigation -->
+    <nav>
+        <div class="container">
+            <div class="logo">RAIN KERAMIKA</div>
+            <ul class="nav-links">
+                <li><a href="#radionice">Radionice</a></li>
+                <li><a href="#galerija">Galerija</a></li>
+                <li><a href="#o-nama">O nama</a></li>
+                <li><a href="#kontakt">Kontakt</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <div class="hero-text">
+                <h1>Opusti se uz<br><strong>RAIN keramiku</strong></h1>
+                <p>Stvori nešto prekrasno vlastitim rukama. Naše radionice keramike su više od učenja tehnike - to je put do opuštanja, kreativnosti i čiste radosti stvaranja.</p>
+                <a href="#kontakt" class="cta-button">Prijavi se na radionicu</a>
+            </div>
+            <div class="hero-image">
+                <img src="https://images.unsplash.com/photo-1565193566173-7a0ee3dbe261?w=800&h=1000&fit=crop" alt="Keramička radionica">
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section class="about" id="o-nama">
+        <div class="about-content">
+            <div class="about-image">
+                <img src="https://images.unsplash.com/photo-1578749556568-bc2c40e68b61?w=600&h=800&fit=crop" alt="Rad s glinom">
+            </div>
+            <div class="about-text">
+                <h2>Zašto baš keramika?</h2>
+                <p>Keramika nas je privukla jer je nevjerojatno zabavna, opuštajuća i pomalo zarazna. A iskreno, volimo i dobro i lipo posuđe! Prvo smo krenule iz znatiželje, a onda nas je zaintrigiralo istražiti više.</p>
+                <p>Prikupljale smo znanje od znalaca, eksperimentirale i učile kroz vlastite greške. Krajem prošle godine smjestile smo se u svoj studio, i od tada polako ostvarujemo sve što smo zamislile.</p>
+                <p>Moramo se pohvaliti da nam još nijednom nije ništa eksplodiralo u peći, koja na finalnom pečenju ide do 1200 °C i radi punih 24 sata. To je jedan od najvećih, i ne tako rijetkih, izazova u keramici.</p>
+                <p>Naši počeci nisu daleko, i baš zato se lako povežemo s polaznicima, osobito s onima koji glinu prvi put drže u rukama. Kad misliš da nemaš pojma što radiš, a na kraju se ne možeš prestati diviti vlastitom remek-djelu, čak i ako si došao bez ikakve vizije.</p>
+                <p><strong>Radionice su sastavni dio naše priče.</strong> Kod nas se ljudi opuste uz čašu vina ili kavu iz naših unikatnih šalica, odmore od ekrana i užurbanosti, i naprave nešto što će ih razveseliti svaki put kad to prime u ruke.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- What's Included -->
+    <section class="whats-included">
+        <h2>Što radionica uključuje</h2>
+        <div class="included-grid">
+            <div class="included-item">
+                <div class="icon">🏺</div>
+                <h3>Svi materijali</h3>
+                <p>Glina, alati i sve što ti treba za stvaranje</p>
+            </div>
+            <div class="included-item">
+                <div class="icon">🔥</div>
+                <h3>Pečenje</h3>
+                <p>Pečenje tvog remek-djela u profesionalnoj peći</p>
+            </div>
+            <div class="included-item">
+                <div class="icon">☕</div>
+                <h3>Piće</h3>
+                <p>Kava, čaj ili matcha - ti biraš</p>
+            </div>
+            <div class="included-item">
+                <div class="icon">🍷</div>
+                <h3>Opuštanje</h3>
+                <p>Ugodna atmosfera bez žurbe i stresa</p>
+            </div>
+            <div class="included-item">
+                <div class="icon">👥</div>
+                <h3>Mala grupa</h3>
+                <p>Pažnja svakom polazniku</p>
+            </div>
+            <div class="included-item">
+                <div class="icon">🎨</div>
+                <h3>Vlastiti projekt</h3>
+                <p>Odneseš kući ono što stvoris</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Gallery Section -->
+    <section class="gallery" id="galerija">
+        <h2>Galerija naših radova</h2>
+        <div class="gallery-grid">
+            <div class="gallery-item">
+                <img src="https://images.unsplash.com/photo-1610701596007-11502861dcfa?w=500&h=500&fit=crop" alt="Keramičke šalice">
+            </div>
+            <div class="gallery-item">
+                <img src="https://images.unsplash.com/photo-1578749556568-bc2c40e68b61?w=500&h=500&fit=crop" alt="Rad na lončarskom kolu">
+            </div>
+            <div class="gallery-item">
+                <img src="https://images.unsplash.com/photo-1610146644423-4b6e8b6fe8b7?w=500&h=500&fit=crop" alt="Keramičke zdjele">
+            </div>
+            <div class="gallery-item">
+                <img src="https://images.unsplash.com/photo-1615485500834-bc10199bc727?w=500&h=500&fit=crop" alt="Detalj keramike">
+            </div>
+            <div class="gallery-item">
+                <img src="https://images.unsplash.com/photo-1565193566173-7a0ee3dbe261?w=500&h=500&fit=crop" alt="Keramika u nastajanju">
+            </div>
+            <div class="gallery-item">
+                <img src="https://images.unsplash.com/photo-1493106819680-4763f17b0158?w=500&h=500&fit=crop" alt="Gotovi proizvodi">
+            </div>
+        </div>
+    </section>
+
+    <!-- Workshops Section -->
+    <section class="workshops" id="radionice">
+        <h2>Nadolazeće radionice</h2>
+        <p class="workshops-subtitle">Dostupno na našoj lokaciji ili vodimo radionice i kod vas</p>
+        
+        <div class="workshop-cards">
+            <div class="workshop-card">
+                <img src="https://images.unsplash.com/photo-1610701596007-11502861dcfa?w=600&h=400&fit=crop" alt="Radionica">
+                <div class="workshop-info">
+                    <div class="workshop-date">15. OŽUJKA 2026.</div>
+                    <h3>Stvaranje šalica</h3>
+                    <p>Nauči oblikovati vlastitu unikatnu šalicu za kavu ili čaj. Savršeno za početnike!</p>
+                    <div class="workshop-details">
+                        <div class="workshop-detail">⏱️ Par sati</div>
+                        <div class="workshop-detail">👥 Do 8 osoba</div>
+                    </div>
+                    <div class="workshop-price">Od 30€ po osobi</div>
+                    <a href="#kontakt" class="workshop-button">Rezerviraj mjesto</a>
+                </div>
+            </div>
+
+            <div class="workshop-card">
+                <img src="https://images.unsplash.com/photo-1615485500834-bc10199bc727?w=600&h=400&fit=crop" alt="Radionica">
+                <div class="workshop-info">
+                    <div class="workshop-date">22. OŽUJKA 2026.</div>
+                    <h3>Dekorativne zdjele</h3>
+                    <p>Izradi prekrasne zdjele s unikatnim uzorcima i bojama.</p>
+                    <div class="workshop-details">
+                        <div class="workshop-detail">⏱️ Par sati</div>
+                        <div class="workshop-detail">👥 Do 8 osoba</div>
+                    </div>
+                    <div class="workshop-price">Od 30€ po osobi</div>
+                    <a href="#kontakt" class="workshop-button">Rezerviraj mjesto</a>
+                </div>
+            </div>
+
+            <div class="workshop-card">
+                <img src="https://images.unsplash.com/photo-1578749556568-bc2c40e68b61?w=600&h=400&fit=crop" alt="Radionica">
+                <div class="workshop-info">
+                    <div class="workshop-date">5. TRAVNJA 2026.</div>
+                    <h3>Proljetna keramika</h3>
+                    <p>Dočekaj proljeće sa cvjetnim ukrasima i vrtnim dekoracijama.</p>
+                    <div class="workshop-details">
+                        <div class="workshop-detail">⏱️ Par sati</div>
+                        <div class="workshop-detail">👥 Do 8 osoba</div>
+                    </div>
+                    <div class="workshop-price">Od 30€ po osobi</div>
+                    <a href="#kontakt" class="workshop-button">Rezerviraj mjesto</a>
+                </div>
+            </div>
+
+            <div class="workshop-card">
+                <img src="https://images.unsplash.com/photo-1493106819680-4763f17b0158?w=600&h=400&fit=crop" alt="Radionica kod vas">
+                <div class="workshop-info">
+                    <div class="workshop-date">PRILAGOĐEN TERMIN</div>
+                    <h3>Radionica na vašoj lokaciji</h3>
+                    <p>Organiziramo radionice i kod vas - savršeno za team building, rođendane ili posebne događaje!</p>
+                    <div class="workshop-details">
+                        <div class="workshop-detail">📍 Vaša lokacija</div>
+                        <div class="workshop-detail">👥 Prilagodljivo</div>
+                    </div>
+                    <div class="workshop-price">Od 30€ po osobi</div>
+                    <a href="#kontakt" class="workshop-button">Pošalji upit</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials -->
+    <section class="testimonials">
+        <h2>Što kažu naši polaznici</h2>
+        <div class="testimonial-grid">
+            <div class="testimonial">
+                <p class="testimonial-text">Nikad nisam radila s glinom, ali atmosfera je bila toliko opuštajuća da sam se odmah opustila. Moja šalica možda nije savršena, ali svaki put kad iz nje pijem kavu, nasmijem se. Hvala vam!</p>
+                <p class="testimonial-author">— Petra K.</p>
+            </div>
+            <div class="testimonial">
+                <p class="testimonial-text">Došla sam sama, a otišla s novim prijateljstvima i prekrasnom zdjelom koju sam sama napravila. Radionica je bila terapeutska - dva sata bez mobitela, samo glina, kava i smijeh.</p>
+                <p class="testimonial-author">— Marina S.</p>
+            </div>
+            <div class="testimonial">
+                <p class="testimonial-text">Organizirali smo team building s RAIN keramikom i bilo je savršeno. Ekipa se povezala na sasvim novi način, a svi smo odnijeli kući nešto što smo sami stvorili. Toplo preporučujem!</p>
+                <p class="testimonial-author">— Tomislav L.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="contact" id="kontakt">
+        <div class="contact-content">
+            <h2>Pošalji upit</h2>
+            <p>Rezerviraj svoje mjesto ili pošalji upit za radionicu na vašoj lokaciji</p>
+            
+            <form class="contact-form" id="contactForm">
+                <div class="form-group">
+                    <label for="name">Ime i prezime</label>
+                    <input type="text" id="name" name="name" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" name="email" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="phone">Telefon</label>
+                    <input type="tel" id="phone" name="phone">
+                </div>
+                
+                <div class="form-group">
+                    <label for="workshop">Željena radionica</label>
+                    <select id="workshop" name="workshop">
+                        <option value="">Odaberi radionicu...</option>
+                        <option value="salice">Stvaranje šalica - 15. ožujka</option>
+                        <option value="zdjele">Dekorativne zdjele - 22. ožujka</option>
+                        <option value="proljece">Proljetna keramika - 5. travnja</option>
+                        <option value="vlastita">Radionica na mojoj lokaciji</option>
+                        <option value="upit">Opći upit</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="message">Poruka</label>
+                    <textarea id="message" name="message" placeholder="Imaš li kakvih posebnih zahtjeva ili pitanja?"></textarea>
+                </div>
+                
+                <button type="submit" class="submit-button">Pošalji upit</button>
+                
+                <div class="form-success" id="formSuccess">
+                    <strong>Hvala na upitu!</strong><br>
+                    Javit ćemo ti se uskoro sa svim potrebnim informacijama.
+                </div>
+            </form>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-logo">RAIN KERAMIKA</div>
+            <div class="footer-info">
+                <p>Email: <a href="mailto:info@rainkeramika.hr">info@rainkeramika.hr</a></p>
+                <p>Hrvatska</p>
+            </div>
+            <p style="margin-top: 2rem; opacity: 0.6; font-size: 0.9rem;">© 2026 RAIN Keramika. Sva prava pridržana.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Form submission
+        document.getElementById('contactForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Show success message
+            document.getElementById('formSuccess').style.display = 'block';
+            
+            // Reset form
+            this.reset();
+            
+            // Hide success message after 5 seconds
+            setTimeout(function() {
+                document.getElementById('formSuccess').style.display = 'none';
+            }, 5000);
+        });
+
+        // Add scroll animation to elements
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver(function(entries) {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        // Observe elements for scroll animations
+        document.querySelectorAll('.workshop-card, .testimonial, .gallery-item, .included-item').forEach(el => {
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(20px)';
+            el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+            observer.observe(el);
+        });
+    </script>
+</body>
+</html>
